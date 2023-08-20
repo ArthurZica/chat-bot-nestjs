@@ -15,9 +15,7 @@ export class AppController {
   @Post('sendMessage')
   sendMessage(@Req() req: any, @Res() res: any) {
     const body = req.body;
-    console.log("numb", body?.number, "text", body?.text);
-
-    return this.appService.sendMessage(body?.number, body?.text);
+    return this.appService.sendMessage(body?.number, body?.text,res);
   }
 
   @Get('contacts')
@@ -25,6 +23,11 @@ export class AppController {
     return this.appService.getContacts(res);
   }
 
+  @Post('session')
+  startVenomSession(@Req() req: any, @Res() res: any) {
+    const body = req.body;
+    return this.appService.startVenomSession(body?.key, res);
+  }
 
 
 }

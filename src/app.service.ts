@@ -11,9 +11,9 @@ export class AppService {
     return 'Hello World!';
   }
 
-  async startVenomSession() {
+  async startVenomSession(key: string, res: any) {
     try {
-      this.clientWpp = await create('sessionName', undefined, (statusSession, session) => {
+      this.clientWpp = await create(key, undefined, (statusSession, session) => {
         console.log('Status Session: ', statusSession);
         console.log('Session name: ', session);
       });
@@ -31,7 +31,7 @@ export class AppService {
     });
   }
 
-  async sendMessage(number: string, message: string) {
+  async sendMessage(number: string, message: string, res: any) {
     console.log(this.clientWpp)
     if (!this.clientWpp) {
       console.log("Cliente do WhatsApp não está pronto ainda.");
@@ -41,15 +41,14 @@ export class AppService {
     console.log("client", this.clientWpp);
     try {
       const result = await this.clientWpp.sendText(`${number}@c.us`, message);
-      console.log('Result: ', result); //return object success
-      return result;
+      return res.send(result.status);
     } catch (error) {
       console.error('Error when sending: ', error); //return object error
-      return error;
+      return res.send(error);
     }
   }
 
-  async getContacts(res) {
+  async getContacts(res : any) {
     try {
       await this.clientWpp.getAllContacts()
         .then((contacts) => {
