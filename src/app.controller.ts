@@ -7,15 +7,10 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
   @Post('sendMessage')
   sendMessage(@Req() req: any, @Res() res: any) {
     const body = req.body;
-    return this.appService.sendMessage(body?.number, body?.text,res);
+    return this.appService.sendMessage(body?.number, body?.text,body?.key,res);
   }
 
   @Get('contacts')
@@ -26,7 +21,7 @@ export class AppController {
   @Post('session')
   startVenomSession(@Req() req: any, @Res() res: any) {
     const body = req.body;
-    return this.appService.startVenomSession(body?.key, res);
+    return this.appService.startVenomSession(body?.key);
   }
 
 
